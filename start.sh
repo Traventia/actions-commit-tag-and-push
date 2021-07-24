@@ -52,4 +52,9 @@ else
     git commit -m "{$INPUT_MESSAGE}" $_EMPTY || exit 0
 fi
 
+## DRM. I include INPUT_TAG to tag the commit
+if [ -n "${INPUT_TAG}" ]; then
+    git tag "$INPUT_TAG"
+fi
+
 git push "${remote_repo}" HEAD:"${INPUT_BRANCH}" --follow-tags $_FORCE_OPTION $_TAGS;

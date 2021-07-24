@@ -3,6 +3,7 @@
 The GitHub Actions for commiting & pushing to GitHub repository local changes authorizing using GitHub token.
 
 With ease:
+
 - update new code placed in the repository, e.g. by running a linter on it,
 - track changes in script results using Git as archive,
 - publish page using GitHub-Pages,
@@ -19,35 +20,36 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-      with:
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-    - name: Create local changes
-      run: |
-        ...
-    - name: Commit & Push changes
-      uses: actions-js/push@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      - name: Create local changes
+        run: |
+          ...
+      - name: Commit & Push changes
+        uses: Traventia/actions-commit-tag-and-push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Inputs
 
-| name           | value   | default                     | description |
-| -------------- | ------  | --------------------------- | ----------- |
-| github_token   | string  |                             | Token for the repo. Can be passed in using `${{ secrets.GITHUB_TOKEN }}`. |
-| author_email   | string  | 'github-actions[bot]@users.noreply.github.com' | Email used to configure user.email in `git config`. |
-| author_name    | string  | 'github-actions[bot]'       | Name used to configure user.name in `git config`. |
-| coauthor_email | string  |                             | Email used to make a co-authored commit. |
-| coauthor_name  | string  |                             | Name used to make a co-authored commit. |
-| message        | string  | 'chore: autopublish ${date}' | Commit message. |
-| branch         | string  | 'master'                    | Destination branch to push changes. |
-| empty          | boolean | false                       | Allow empty commit. |
-| force          | boolean | false                       | Determines if force push is used. |
-| tags           | boolean | false                       | Determines if `--tags` is used. |
-| directory      | string  | '.'                         | Directory to change to before pushing. |
-| repository     | string  | ''                          | Repository name. Default or empty repository name represents current github repository. If you want to push to other repository, you should make a [personal access token](https://github.com/settings/tokens) and use it as the `github_token` input.  |
+| name           | value   | default                                        | description                                                                                                                                                                                                                                            |
+| -------------- | ------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| github_token   | string  |                                                | Token for the repo. Can be passed in using `${{ secrets.GITHUB_TOKEN }}`.                                                                                                                                                                              |
+| author_email   | string  | 'github-actions[bot]@users.noreply.github.com' | Email used to configure user.email in `git config`.                                                                                                                                                                                                    |
+| author_name    | string  | 'github-actions[bot]'                          | Name used to configure user.name in `git config`.                                                                                                                                                                                                      |
+| coauthor_email | string  |                                                | Email used to make a co-authored commit.                                                                                                                                                                                                               |
+| coauthor_name  | string  |                                                | Name used to make a co-authored commit.                                                                                                                                                                                                                |
+| message        | string  | 'chore: autopublish ${date}'                   | Commit message.                                                                                                                                                                                                                                        |
+| branch         | string  | 'master'                                       | Destination branch to push changes.                                                                                                                                                                                                                    |
+| empty          | boolean | false                                          | Allow empty commit.                                                                                                                                                                                                                                    |
+| force          | boolean | false                                          | Determines if force push is used.                                                                                                                                                                                                                      |
+| tags           | boolean | false                                          | Determines if `--tags` is used.                                                                                                                                                                                                                        |
+| tag            | string  | ''                                             | Tag the commit generated with this tag                                                                                                                                                                                                                 |
+| directory      | string  | '.'                                            | Directory to change to before pushing.                                                                                                                                                                                                                 |
+| repository     | string  | ''                                             | Repository name. Default or empty repository name represents current github repository. If you want to push to other repository, you should make a [personal access token](https://github.com/settings/tokens) and use it as the `github_token` input. |
 
 ## License
 
